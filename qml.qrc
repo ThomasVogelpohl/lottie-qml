@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>src/qml/main.qml</file>
+        <file>src/qml/LottieAnimation.qml</file>
+        <file>src/qml/private/HtmlImg.qml</file>
+        <file>src/qml/private/lottie_shim.js</file>
+        <file>src/qml/3rdparty/lottie.min.js</file>
+
+        <file>lottieFiles/material_wave_loading.json</file>
+
+    </qresource>
+</RCC>
