@@ -466,4 +466,7 @@ Item {
             // does nothing
         }
     }
+
+    Component.onDestruction:
+        d.destroyAnimation()
 }
