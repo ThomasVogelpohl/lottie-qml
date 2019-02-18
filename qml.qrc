@@ -1,6 +1,8 @@
 <RCC>
     <qresource prefix="/">
         <file>src/qml/main.qml</file>
+        <file>src/qml/factorial.js</file>
+        <file>src/qml/script.js</file>
         <file>src/qml/LottieAnimation.qml</file>
         <file>src/qml/private/HtmlImg.qml</file>
         <file>src/qml/private/lottie_shim.js</file>

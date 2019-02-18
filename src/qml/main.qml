@@ -6,6 +6,7 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.1
 import Qt.labs.settings 1.0
 import "./." as Lottie
+import "script.js" as MyScript
 
 Window {
     id: root
@@ -15,36 +16,48 @@ Window {
     title: "Lottie Tester"
     visible: true
 
-    property int countLoader: value
+    property int countLoader: 0
 
     Loader {
         id: loader
         anchors.fill: parent
-        sourceComponent: animationArea
+        sourceComponent: undefined
 
         onStatusChanged: {
-            console.log("Lottie - loader.status: " + loader.status + " - count: " + countLoader)
-            if (loader.status === Loader.Ready)
+            // console.log("Lottie - loader.status: " + loader.status + " - count: " + countLoader)
+            if (loader.status === Loader.Ready) {
                 countLoader = countLoader + 1
+                console.log("Loader - Loader.Ready")
+            } else if(loader.status === Loader.Null) {
+               gc()
+                console.log("Loader - Loader Null")
+
+
+            } else {
+                console.log("Loader - Unhandled status: " + loader.status)
+            }
         }
     }
 
     Timer {
         id: triggerTimer
-        interval: 400
+        interval: 100
         running: true
         repeat: true
         onTriggered: {
-            if (countLoader >= 10) {
+            if (countLoader >= 200) {
                 triggerTimer.running = false
                 loader.sourceComponent = undefined
+                
+                gc()
+//                Qt.quit();
             } else {
 
                 if (loader.sourceComponent != undefined) {
                     loader.sourceComponent = undefined
                     console.log("Timer unload")
                 } else {
-                    loader.sourceComponent = animationArea
+                    loader.sourceComponent =  animationArea // animationAreaTest
                     console.log("Timer load")
                 }
             }
@@ -57,15 +70,13 @@ Window {
             width: 800
             height: 600
 
-            Rectangle {
+            Item {
                 id: animBackground
                 width: 0.65 * parent.width
                 height: parent.height - 0.1175 * root.width //0.65 * parent.height
                 //anchors.centerIn: parent
                 anchors.top: parent.top
                 anchors.horizontalCenter: parent.horizontalCenter
-                color: "transparent"
-                radius: 3
 
                 Lottie.LottieAnimation {
                     anchors.fill: parent
@@ -83,27 +94,37 @@ Window {
                     renderStrategy: Canvas.Cooperative
 
                     source: "qrc:/lottieFiles/material_wave_loading.json"
-
-                    Component.onDestruction: {
-                        console.log("Thomas - main onDestruction")
-//                        lottieAnim.destroyAll()
-                    }
                 }
             }
         }
     }
 
-    // Lottie.LottieAnimation {
-    //     id: lottieAnim
-    //     anchors.centerIn: parent
-    //     width: parent.width
-    //     height: parent.height
-    //      source: "qrc:/lottieFiles/gradient_animated_background.json"
-    //     running: true
-    //     clearBeforeRendering: true
-    //     speed: 1.0
-    //     loops: Animation.Infinite
-    //     fillMode: Image.PreserveAspectFit
-    //     reverse: false
-    // }
+
+    Component {
+        id: animationAreaTest
+        Item {
+            width: 800
+            height: 600
+
+            Rectangle {
+                id: animBackground
+                width: 0.65 * parent.width
+                height: parent.height - 0.1175 * root.width //0.65 * parent.height
+                //anchors.centerIn: parent
+                anchors.top: parent.top
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: "blue"
+                radius: 3
+
+                Component.onCompleted: {
+                    MyScript.showCalculations(10)
+                }
+
+                Component.onDestruction: {
+                    MyScript.deleteFactorial()
+                }
+                
+            }
+        }
+    }
 }

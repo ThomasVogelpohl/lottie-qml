@@ -263,10 +263,10 @@ Item {
                 return;
             }
 
-            var data = animationData;
-            if (!data) {
-                return;
-            }
+            // var data = animationData;
+            // if (!data) {
+            //     return;
+            // }
 
             var lottie = Lottie.initialize(canvas);
 
@@ -301,7 +301,7 @@ Item {
                 },
                 loop: loop,
                 autoplay: lottieItem.running,
-                animationData: data
+                animationData: animationData // data
             });
 
             animationItem.setSpeed(lottieItem.speed);
