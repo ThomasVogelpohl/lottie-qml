@@ -19,7 +19,7 @@ function showCalculations(value) {
 function deleteFactorial() {
     console.log(
         "Delete");
-    delete showCalculations.factorial
-    delete showCalculations.window
-    delete showCalculations.lottieJs
+    // delete showCalculations.factorial
+    // delete showCalculations.window
+    // delete showCalculations.lottieJs
 }
